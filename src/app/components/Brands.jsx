@@ -1,24 +1,44 @@
 import React from "react";
+import Marquee from "react-fast-marquee";
+import Image from "next/image";
 
 const Brands = () => {
   return (
-    <div classname="relative flex overflow-x-hidden">
-      <div classname="py-12 animate-marquee whitespace-nowrap">
-        <span classname="text-4xl mx-4">Marquee Item 1</span>
-        <span classname="text-4xl mx-4">Marquee Item 2</span>
-        <span classname="text-4xl mx-4">Marquee Item 3</span>
-        <span classname="text-4xl mx-4">Marquee Item 4</span>
-        <span classname="text-4xl mx-4">Marquee Item 5</span>
-      </div>
-
-      <div classname="absolute top-0 py-12 animate-marquee2 whitespace-nowrap">
-        <span classname="text-4xl mx-4">Marquee Item 1</span>
-        <span classname="text-4xl mx-4">Marquee Item 2</span>
-        <span classname="text-4xl mx-4">Marquee Item 3</span>
-        <span classname="text-4xl mx-4">Marquee Item 4</span>
-        <span classname="text-4xl mx-4">Marquee Item 5</span>
-      </div>
-    </div>
+    <article>
+      {/* Images for the Home page brands in the moving banner */}
+      <Marquee autoFill className="py-10">
+        <Image
+          src="/images/husqviking.jpg"
+          alt="viking 95"
+          height={200}
+          width={200}
+        />
+        <Image
+          src="/images/handi-quilter.jpg"
+          alt="viking 95"
+          height={200}
+          width={200}
+        />
+        <Image
+          src="/images/qbot.jpg"
+          alt="viking 95"
+          height={200}
+          width={200}
+        />
+        <Image
+          src="/images/elna.jpg"
+          alt="viking 95"
+          height={200}
+          width={200}
+        />
+        {/* <Image
+          src="/images/durkee.jpg"
+          alt="viking 95"
+          height={200}
+          width={200}
+        /> */}
+      </Marquee>
+    </article>
   );
 };
 
