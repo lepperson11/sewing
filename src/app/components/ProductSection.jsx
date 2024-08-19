@@ -1,9 +1,10 @@
 import React from "react";
 import ProductCard from "./ProductCard";
 import { notFound } from "next/navigation";
+import GET from "../api/product/route";
 
 async function getData() {
-  const res = await fetch("http://localhost:3000/api/product");
+  const res = await GET;
   if (!res.ok) return notFound();
   return res.json();
 }
@@ -124,24 +125,44 @@ async function getData() {
 // ];
 
 const ProductSection = async () => {
-  const data = await getData();
-  console.log(data);
-  return (
-    <ul className="grid md:grid-cols-4 gap-8 md:gap-12">
-      {data &&
-        data?.map((product) => {
-          console.log(product._id);
+  //let data = await getData();
+  //console.log(data);
+  let products;
+  products = await getData();
 
-          <ProductCard
-            key={product._id}
-            title={product.title}
-            description={product.description}
-            imgUrl={product.image}
-            price={product.price}
-            brand={product.brand}
-          />;
-        })}
+  console.log(products);
+
+  //console.log(data);
+
+  products.map((product) => {
+    console.log("Product", product);
+  });
+
+  return (
+    // <ul className="grid md:grid-cols-4 gap-8 md:gap-12">
+    //   {data.map((product) => {
+    //     console.log(product._id);
+    //     <p>{product._id}</p>;
+    //     // <ProductCard
+    //     //   key={product._id}
+    //     //   title={product.title}
+    //     //   description={product.description}
+    //     //   imgUrl={product.image}
+    //     //   price={product.price}
+    //     // />;
+
+    <ul className="grid md:grid-cols-4 gap-8 md:gap-12">
+      {products.map((product) => (
+        <ProductCard
+          imgUrl={product.image}
+          title={product.title}
+          description={product.description}
+          price={product.price}
+        />
+      ))}
     </ul>
+    //   })}
+    // </ul>
   );
 
   //   const [tag, setTag] = useState("All");

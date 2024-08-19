@@ -1,11 +1,13 @@
 import { NextResponse } from "next/server";
 import connect from "../../../../db";
-import product from "../../models/product";
+import products from "../../models/product";
 
-export const GET = async (request) => {
+const GET = async (request) => {
   try {
     await connect();
-    const products = await product.find();
+    const products = await products.find();
+    console.log(products);
+
     return new NextResponse(JSON.stringify(products), {
       status: 200,
     });
@@ -15,3 +17,5 @@ export const GET = async (request) => {
     });
   }
 };
+
+export default GET;
