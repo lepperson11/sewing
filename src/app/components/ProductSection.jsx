@@ -1,13 +1,14 @@
 import React from "react";
 import ProductCard from "./ProductCard";
 import { notFound } from "next/navigation";
-import GET from "../api/product/route";
 
-async function getData() {
-  const res = await GET;
-  if (!res.ok) return notFound();
-  return res.json();
-}
+import { headers } from "next/headers";
+
+// async function getData() {
+//   const res = await GET();
+//   if (!res.ok) return notFound();
+//   return res.json();
+// }
 
 // const productData = [
 //   {
@@ -125,18 +126,36 @@ async function getData() {
 // ];
 
 const ProductSection = async () => {
-  //let data = await getData();
-  //console.log(data);
-  let products;
-  products = await getData();
-
+  // //let data = await getData();
+  // //console.log(data);
+  // let products;
+  //
+  const getData = async () => {
+    const endpoint = "http://localhost:3000/api/product";
+    const options = {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    };
+    const response = await fetch(endpoint, options);
+    const productData = await response.json();
+    if (response.status == 200) {
+      console.log(productData.data);
+    }
+    if (response.status == 500) {
+      console.log(productData.error);
+    }
+    return productData.data;
+  };
+  const products = await getData();
   console.log(products);
 
+  // console.log(products);
+
   //console.log(data);
 
-  products.map((product) => {
-    console.log("Product", product);
-  });
+  // products.map((product) => {
+  //   console.log("Product", product);
+  // });
 
   return (
     // <ul className="grid md:grid-cols-4 gap-8 md:gap-12">
@@ -151,9 +170,10 @@ const ProductSection = async () => {
     //     //   price={product.price}
     //     // />;
 
-    <ul className="grid md:grid-cols-4 gap-8 md:gap-12">
+    <ul className="grid md:grid-cols-4 gap-8 md:gap-12 mt-6 mx-2">
       {products.map((product) => (
         <ProductCard
+          key={product._id}
           imgUrl={product.image}
           title={product.title}
           description={product.description}
@@ -163,64 +183,65 @@ const ProductSection = async () => {
     </ul>
     //   })}
     // </ul>
+    // );
+
+    //   const [tag, setTag] = useState("All");
+    //   const ref = useRef(null);
+
+    //   const handleTagChange = (newTag) => {
+    //     setTag(newTag);
+    //   };
+
+    //   const filteredProducts = productData.filter((product) =>
+    //     product.tag.includes(tag)
+    //   );
+
+    //   return (
+    //     <section>
+    //       <h2 className="text-center text-4xl font-bold text-white mt-4 mb-8 md:mb-12 underline decoration-lime-500">
+    //         Products
+    //       </h2>
+    //       <div className="text-white flex flex-row justify-center items-center gap-2 py-6 ">
+    //         <ProductTag
+    //           onClick={handleTagChange}
+    //           name="All"
+    //           isSelected={tag === "All"}
+    //         />
+    //         <ProductTag
+    //           onClick={handleTagChange}
+    //           name="Elna"
+    //           isSelected={tag === "Elna"}
+    //         />
+    //         <ProductTag
+    //           onClick={handleTagChange}
+    //           name="QBot"
+    //           isSelected={tag === "QBot"}
+    //         />
+    //         <ProductTag
+    //           onClick={handleTagChange}
+    //           name="Husqvarna"
+    //           isSelected={tag === "Husqvarna"}
+    //         />
+    //         <ProductTag
+    //           onClick={handleTagChange}
+    //           name="Handi Quilter"
+    //           isSelected={tag === "Handi Quilter"}
+    //         />
+    //       </div>
+    //       <ul ref={ref} className="grid md:grid-cols-4 gap-8 md:gap-12">
+    //         {filteredProducts.map((product, index) => (
+    //           <ProductCard
+    //             key={product.id}
+    //             title={product.title}
+    //             description={product.description}
+    //             imgUrl={product.image}
+    //             price={product.price}
+    //           />
+    //         ))}
+    //       </ul>
+    //     </section>
+    //   );
   );
-
-  //   const [tag, setTag] = useState("All");
-  //   const ref = useRef(null);
-
-  //   const handleTagChange = (newTag) => {
-  //     setTag(newTag);
-  //   };
-
-  //   const filteredProducts = productData.filter((product) =>
-  //     product.tag.includes(tag)
-  //   );
-
-  //   return (
-  //     <section>
-  //       <h2 className="text-center text-4xl font-bold text-white mt-4 mb-8 md:mb-12 underline decoration-lime-500">
-  //         Products
-  //       </h2>
-  //       <div className="text-white flex flex-row justify-center items-center gap-2 py-6 ">
-  //         <ProductTag
-  //           onClick={handleTagChange}
-  //           name="All"
-  //           isSelected={tag === "All"}
-  //         />
-  //         <ProductTag
-  //           onClick={handleTagChange}
-  //           name="Elna"
-  //           isSelected={tag === "Elna"}
-  //         />
-  //         <ProductTag
-  //           onClick={handleTagChange}
-  //           name="QBot"
-  //           isSelected={tag === "QBot"}
-  //         />
-  //         <ProductTag
-  //           onClick={handleTagChange}
-  //           name="Husqvarna"
-  //           isSelected={tag === "Husqvarna"}
-  //         />
-  //         <ProductTag
-  //           onClick={handleTagChange}
-  //           name="Handi Quilter"
-  //           isSelected={tag === "Handi Quilter"}
-  //         />
-  //       </div>
-  //       <ul ref={ref} className="grid md:grid-cols-4 gap-8 md:gap-12">
-  //         {filteredProducts.map((product, index) => (
-  //           <ProductCard
-  //             key={product.id}
-  //             title={product.title}
-  //             description={product.description}
-  //             imgUrl={product.image}
-  //             price={product.price}
-  //           />
-  //         ))}
-  //       </ul>
-  //     </section>
-  //   );
 };
 
 export default ProductSection;

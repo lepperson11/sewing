@@ -1,21 +1,26 @@
 import { NextResponse } from "next/server";
 import connect from "../../../../db";
-import products from "../../models/product";
+import Products from "../../models/product";
 
-const GET = async (request) => {
+export async function GET() {
   try {
     await connect();
-    const products = await products.find();
-    console.log(products);
+    const products = await Products.find();
 
-    return new NextResponse(JSON.stringify(products), {
+    if (!products) {
+      return NextResponse.json({
+        error: "Not Found",
+        status: 404,
+      });
+    }
+    return NextResponse.json({
+      data: products,
       status: 200,
     });
   } catch (error) {
-    return new NextResponse("Error in fetching products" + error, {
+    return NextResponse.json({
+      error: error,
       status: 500,
     });
   }
-};
-
-export default GET;
+}
