@@ -26,6 +26,10 @@ const ContactUs = () => {
       <p className="pb-6">
         <b>Sunday:</b> CLOSED
       </p>
+      <h1 className="font-bold pb-2 underline decoration-lime-500 text-xl">
+        Showroom Location
+      </h1>
+      <h2 className="text-red-500">713 Center Drive San Marcos, CA 92069</h2>
       <h1 className="underline decoration-lime-500 font-bold text-xl py-4">
         Email Us
       </h1>
